@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Environments
 .env
 .venv
@@ -15,6 +16,8 @@ venv.bak/
 # Dataset
 dataset
 
+=======
+>>>>>>> eb22309248dbce85088541be57c7352958d1e31b
 =======
 >>>>>>> eb22309248dbce85088541be57c7352958d1e31b
 # Byte-compiled / optimized / DLL files
@@ -141,7 +144,10 @@ celerybeat.pid
 *.sage.py
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> eb22309248dbce85088541be57c7352958d1e31b
 # Environments
 .env
 .venv
@@ -151,6 +157,9 @@ ENV/
 env.bak/
 venv.bak/
 
+<<<<<<< HEAD
+>>>>>>> eb22309248dbce85088541be57c7352958d1e31b
+=======
 >>>>>>> eb22309248dbce85088541be57c7352958d1e31b
 # Spyder project settings
 .spyderproject
