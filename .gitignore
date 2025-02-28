@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Environments
 .env
 .venv
@@ -14,6 +15,8 @@ venv.bak/
 # Dataset
 dataset
 
+=======
+>>>>>>> eb22309248dbce85088541be57c7352958d1e31b
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -137,6 +140,18 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
+<<<<<<< HEAD
+=======
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+>>>>>>> eb22309248dbce85088541be57c7352958d1e31b
 # Spyder project settings
 .spyderproject
 .spyproject
