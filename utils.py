@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[9]:
+# In[30]:
 
 
 MODEL_PATH = 'architectures/'
@@ -9,7 +9,7 @@ DATASET_PATH = 'dataset/'
 RANDOM_SEED = 42 # Set to `None` for the generator uses the current system time.
 
 
-# In[10]:
+# In[31]:
 
 
 import sys
@@ -30,7 +30,7 @@ print(f"CUDA version: `{tf_build_info.build_info['cuda_version']}`")
 print(f"Num GPUs Available: {len(list_physical_devices('GPU'))}")
 
 
-# In[11]:
+# In[32]:
 
 
 import pandas as pd
@@ -40,10 +40,12 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.utils import shuffle
 from imblearn.over_sampling import SMOTE
 
+import time
+
 np.random.seed(RANDOM_SEED)
 
 
-# In[12]:
+# In[33]:
 
 
 def feature_engineering(data):
@@ -97,7 +99,7 @@ def feature_engineering(data):
     return data
 
 
-# In[17]:
+# In[34]:
 
 
 def pre_processing(data, encoding=True):
@@ -155,17 +157,41 @@ def pre_processing(data, encoding=True):
     return x, y, data, transformations
 
 
+# In[35]:
+
+
+def load_models(model_path=MODEL_PATH):
+    loaded_models = {}
+    print("\n===== MODEL METADATA =====\n")
+    
+    for model_name in os.listdir(model_path):
+        full_path = os.path.join(model_path, model_name)
+        
+        try:
+            model = tf.keras.models.load_model(full_path)
+
+            # Print metadata
+            print(f"\n=== Model: `{model_name}` ===")
+            print(f"Input shape: {model.input_shape}")
+            print(f"Output shape: {model.output_shape}")
+            print(f"Number of layers: {len(model.layers)}")
+            print(f"Total parameters: {model.count_params():,}")
+            print(f"File size: {os.path.getsize(full_path) / (1024 * 1024):.2f} MB")
+            print(f"Last modified: {time.ctime(os.path.getmtime(full_path))}")
+            
+            print("\n" + "-"*50)
+
+            loaded_models[model_name] = model
+        except Exception as e:
+            print(f"\n**Error loading model `{model_name}`: `{e}`")
+            print("-"*50)
+            
+    return loaded_models
+
+
 # # Testing 
 
-# In[14]:
-
-
-# test_data = pd.read_csv(os.path.join(DATASET_PATH, 'fraudTest.csv'), index_col=0)
-# test_data = feature_engineering(test_data)
-# x, y, data, transformations = pre_processing(test_data)
-
-
-# In[15]:
+# In[36]:
 
 
 # Export this notebook into script `.py` file
