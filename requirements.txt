@@ -12,3 +12,6 @@ imbalanced-learn>=0.0
 # Visualization
 matplotlib>=3.10.1
 seaborn>=0.13.2
+
+# Other utils
+requests>=2.32.3
