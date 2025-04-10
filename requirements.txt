@@ -1,0 +1,14 @@
+# Deep learning
+tensorflow==2.10.1 	# !!NOTE: Latest version of `tensorflow` supports GPU on Windows Native is `2.10.1` 
+
+# Data manipulation and analysis
+numpy==1.26.4	# !!NOTE: Latest version of `numpy` that is compatible with `tensorflow==2.10.1`
+pandas>=2.2.3
+
+# Machine learning
+scikit-learn>=1.6.1
+imbalanced-learn>=0.0
+
+# Visualization
+matplotlib>=3.10.1
+seaborn>=0.13.2
