@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[30]:
+# In[21]:
 
 
 MODEL_PATH = 'architectures/'
@@ -9,7 +9,7 @@ DATASET_PATH = 'dataset/'
 RANDOM_SEED = 42 # Set to `None` for the generator uses the current system time.
 
 
-# In[31]:
+# In[22]:
 
 
 import sys
@@ -30,7 +30,7 @@ print(f"CUDA version: `{tf_build_info.build_info['cuda_version']}`")
 print(f"Num GPUs Available: {len(list_physical_devices('GPU'))}")
 
 
-# In[32]:
+# In[23]:
 
 
 import pandas as pd
@@ -41,11 +41,87 @@ from sklearn.utils import shuffle
 from imblearn.over_sampling import SMOTE
 
 import time
+import requests
+import shutil
 
 np.random.seed(RANDOM_SEED)
 
 
-# In[33]:
+# In[24]:
+
+
+import os
+import requests
+import shutil
+from tqdm import tqdm  # Make sure tqdm is installed: pip install tqdm
+
+def download_file(url, save_path, file_name=None, extract=False, force_download=False):
+    """Download a file and optionally extract if it's compressed."""
+    print(f"URL: {url}")
+    
+    if not file_name:
+        file_name = os.path.basename(url)
+
+    # If not forcing download and the file already exists, skip downloading.
+    if not force_download and os.path.exists(os.path.join(save_path, file_name)):
+        print(f"File `{os.path.join(save_path, file_name)}` already exists.")
+        return
+
+    os.makedirs(save_path, exist_ok=True)
+    
+    # Adjust file name if extraction is expected (e.g., assume download is a zip file)
+    file_name += '.zip' if extract else ''
+    file_path = os.path.join(save_path, file_name)
+    
+    # Send GET request in streaming mode
+    response = requests.get(url, stream=True)
+    if response.status_code != 200:
+        print(f"| Failed: [{response.reason}]")
+        return response
+
+    # Get the total size from the response header (if available)
+    total_size = int(response.headers.get('Content-Length', 0))
+    chunk_size = 1024  # 1KB chunks
+
+    # Open the output file and use tqdm to show the progress bar.
+    with open(file_path, 'wb') as f, tqdm(
+        total=total_size, unit='B', unit_scale=True, desc=f"Downloading `{file_name}`"
+    ) as pbar:
+        for chunk in response.iter_content(chunk_size=chunk_size):
+            if chunk:  # filter out keep-alive new chunks
+                f.write(chunk)
+                pbar.update(len(chunk))
+    
+    # Extract the archive if requested
+    if extract:
+        try:
+            shutil.unpack_archive(file_path, extract_dir=save_path)
+            print(f"Extracted archive... ", end='')
+            # Remove the archive file after extraction
+            os.remove(file_path)
+        except shutil.ReadError:
+            print(f"| Note: {file_path} is not an archive or could not be extracted ", end='')
+    
+    print(f"| Succeeded")
+    return response
+    
+def download_dataset_from_kaggle(file_name=None, save_path=DATASET_PATH, extract=True, force_download=False,
+                                 dataset_url="datasets/download/kartik2112/fraud-detection"):
+    # Download the dataset from Kaggle
+    BASE_URL = "https://www.kaggle.com/api/v1"
+
+    
+    # Factor char list
+    download_file(
+        f'{BASE_URL}/{dataset_url}/{file_name}',
+        save_path,
+        file_name,
+        extract,
+        force_download
+    )
+
+
+# In[25]:
 
 
 def feature_engineering(data):
@@ -99,7 +175,7 @@ def feature_engineering(data):
     return data
 
 
-# In[34]:
+# In[26]:
 
 
 def pre_processing(data, encoding=True):
@@ -157,7 +233,7 @@ def pre_processing(data, encoding=True):
     return x, y, data, transformations
 
 
-# In[35]:
+# In[27]:
 
 
 def load_models(model_path=MODEL_PATH):
@@ -189,9 +265,15 @@ def load_models(model_path=MODEL_PATH):
     return loaded_models
 
 
+# In[ ]:
+
+
+
+
+
 # # Testing 
 
-# In[36]:
+# In[28]:
 
 
 # Export this notebook into script `.py` file
