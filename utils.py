@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[22]:
+# In[9]:
 
 
 MODEL_PATH = 'architectures/'
@@ -9,7 +9,7 @@ DATASET_PATH = 'dataset/'
 RANDOM_SEED = 42 # Set to `None` for the generator uses the current system time.
 
 
-# In[14]:
+# In[10]:
 
 
 import sys
@@ -30,17 +30,25 @@ print(f"CUDA version: `{tf_build_info.build_info['cuda_version']}`")
 print(f"Num GPUs Available: {len(list_physical_devices('GPU'))}")
 
 
-# In[18]:
+# In[11]:
 
 
 import pandas as pd
 import numpy as np
 
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.utils import shuffle
+from imblearn.over_sampling import SMOTE
 
-# In[20]:
+np.random.seed(RANDOM_SEED)
+
+
+# In[12]:
 
 
 def feature_engineering(data):
+    data = data.copy()
+    
     ## 1) Derive `age`, `age_group` feature from `dob`
     data['dob'] = pd.to_datetime(data['dob'])
     data['age'] = (pd.Timestamp.today() - data['dob']).dt.days // 365
@@ -75,16 +83,89 @@ def feature_engineering(data):
         data['merch_long']
     )
 
+    # Move label columns back at the end
+    data.insert(len(data.columns)-1, "is_fraud", data.pop("is_fraud"))
+
+     # Drop unccessary columns
+    drop_cols = ["trans_date_trans_time", "cc_num","first","last","street","city", "state", "zip","job", 'dob',"trans_num"]
+    data.drop(columns=drop_cols, axis=1, inplace=True)
+
+    # Convert categorical coulumns
+    categorical_cols = data.select_dtypes(include=['object', 'category']).columns.to_list()
+    data[categorical_cols] = data[categorical_cols].astype('category')
+
     return data
 
 
-# In[ ]:
-
-
-
-
-
 # In[17]:
+
+
+def pre_processing(data, encoding=True):
+    data = data.copy()
+    
+    # # Balancing the data
+    # non_fraud = data[data['is_fraud'] == 0]
+    # fraud = data[data['is_fraud'] == 1]
+    # non_fraud = non_fraud.sample(len(fraud))
+    # data = pd.concat([non_fraud, fraud])
+
+    # Split up labels
+    x = data.drop(["is_fraud"], axis=1).to_numpy()
+    y = data["is_fraud"]
+    
+    # Perform data encoding
+    transformations = {}
+    if encoding:
+        categorical = {col: data.columns.get_loc(col) for col in data.select_dtypes('category').columns}
+          
+        # print(f'One Hot Encoding is applied for `{list(categorical.keys())}`')
+        # data = pd.get_dummies(data, prefix=list(categorical.keys()), columns=list(categorical.keys()), dtype='category')
+          
+        print(f'Ordinal-Encoding is applied for `{list(categorical.keys())}`')
+        for col, idx in categorical.items():
+            le = LabelEncoder()
+            x[:, idx] = le.fit_transform(x[:, idx])
+            transformations[col] = le  # Store for future reference
+    
+    # Standardization
+    scaler = StandardScaler()
+    x = scaler.fit_transform(x)
+    transformations['scaler'] = scaler
+    
+    # If the training data imbalanced we’ll address this using Synthetic Minority Oversampling Technique (SMOTE).
+    # It is an oversampling technique that creates artificial minority class samples.
+    # In our case, it creates synthetic fraud instances and so corrects the imbalance in our dataset.
+    if y.value_counts()[0] != y.value_counts()[1]:
+        x, y = SMOTE().fit_resample(x, y)
+        x, y = shuffle(x, y) # Then explicitly shuffle the data
+        print('SMOTE is applied')
+        
+        # Upadte new synthetic data
+        x_unscaled = transformations['scaler'].inverse_transform(x)
+        x_unscaled = x_unscaled.astype(object)
+
+
+        for col, idx in categorical.items():
+            x_unscaled[:, idx] = transformations[col].inverse_transform(x_unscaled[:, idx].astype(int))
+        
+        data = pd.DataFrame(np.concatenate([x_unscaled, np.expand_dims(y, axis=1)], axis=1), columns=data.columns)
+        data[list(categorical.keys())] = data[list(categorical.keys())].astype('category')
+        
+          
+    return x, y, data, transformations
+
+
+# # Testing 
+
+# In[14]:
+
+
+# test_data = pd.read_csv(os.path.join(DATASET_PATH, 'fraudTest.csv'), index_col=0)
+# test_data = feature_engineering(test_data)
+# x, y, data, transformations = pre_processing(test_data)
+
+
+# In[15]:
 
 
 # Export this notebook into script `.py` file
