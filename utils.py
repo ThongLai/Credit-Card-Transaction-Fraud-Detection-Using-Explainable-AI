@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[56]:
 
 
 MODEL_PATH = 'architectures/'
@@ -9,7 +9,7 @@ DATASET_PATH = 'dataset/'
 RANDOM_SEED = 42 # Set to `None` for the generator uses the current system time.
 
 
-# In[2]:
+# In[57]:
 
 
 import sys
@@ -30,7 +30,7 @@ print(f"CUDA version: `{tf_build_info.build_info['cuda_version']}`")
 print(f"Num GPUs Available: {len(list_physical_devices('GPU'))}")
 
 
-# In[ ]:
+# In[58]:
 
 
 import pandas as pd
@@ -49,7 +49,7 @@ from tqdm import tqdm
 np.random.seed(RANDOM_SEED)
 
 
-# In[ ]:
+# In[59]:
 
 
 def download_file(url, save_path, file_name=None, extract=False, force_download=False):
@@ -118,7 +118,7 @@ def download_dataset_from_kaggle(file_name=None, save_path=DATASET_PATH, extract
     )
 
 
-# In[ ]:
+# In[60]:
 
 
 def feature_engineering(data):
@@ -166,19 +166,19 @@ def feature_engineering(data):
     data.drop(columns=drop_cols, axis=1, inplace=True)
 
     # Convert categorical coulumns
-    categorical_cols = data.select_dtypes(include=['object', 'category']).columns.to_list()
-    data[categorical_cols] = data[categorical_cols].astype('category')
+    categorical_features = data.select_dtypes(include=['object', 'category']).columns.to_list()
+    data[categorical_features] = data[categorical_features].astype('category')
 
     return data
 
 
-# In[ ]:
+# In[61]:
 
 
 def pre_processing(data, encoding=True):
     data = data.copy()
     
-    # # Balancing the data
+    # # Balancing the data (without SMOTE)
     # non_fraud = data[data['is_fraud'] == 0]
     # fraud = data[data['is_fraud'] == 1]
     # non_fraud = non_fraud.sample(len(fraud))
@@ -187,17 +187,20 @@ def pre_processing(data, encoding=True):
     # Split up labels
     x = data.drop(["is_fraud"], axis=1).to_numpy()
     y = data["is_fraud"]
+
+    categorical_features = {col: data.columns.get_loc(col) for col in data.select_dtypes('category').columns}
+    int_features = {col: data.columns.get_loc(col) for col in data.select_dtypes(int).columns}
+    float_features = {col: data.columns.get_loc(col) for col in data.select_dtypes(float).columns}
     
     # Perform data encoding
     transformations = {}
     if encoding:
-        categorical = {col: data.columns.get_loc(col) for col in data.select_dtypes('category').columns}
           
-        # print(f'One Hot Encoding is applied for `{list(categorical.keys())}`')
-        # data = pd.get_dummies(data, prefix=list(categorical.keys()), columns=list(categorical.keys()), dtype='category')
+        # print(f'One Hot Encoding is applied for `{list(categorical_features.keys())}`')
+        # data = pd.get_dummies(data, prefix=list(categorical_features.keys()), columns=list(categorical_features.keys()), dtype='category')
           
-        print(f'Ordinal-Encoding is applied for `{list(categorical.keys())}`')
-        for col, idx in categorical.items():
+        print(f'Ordinal-Encoding is applied for `{list(categorical_features.keys())}`')
+        for col, idx in categorical_features.items():
             le = LabelEncoder()
             x[:, idx] = le.fit_transform(x[:, idx])
             transformations[col] = le  # Store for future reference
@@ -220,17 +223,18 @@ def pre_processing(data, encoding=True):
         x_unscaled = x_unscaled.astype(object)
 
 
-        for col, idx in categorical.items():
+        for col, idx in categorical_features.items():
             x_unscaled[:, idx] = transformations[col].inverse_transform(x_unscaled[:, idx].astype(int))
         
         data = pd.DataFrame(np.concatenate([x_unscaled, np.expand_dims(y, axis=1)], axis=1), columns=data.columns)
-        data[list(categorical.keys())] = data[list(categorical.keys())].astype('category')
-        
+        data[list(categorical_features.keys())] = data[list(categorical_features.keys())].astype('category')
+        data[list(int_features.keys())] = data[list(int_features.keys())].astype(int)
+        data[list(float_features.keys())] = data[list(float_features.keys())].astype(float)
           
     return x, y, data, transformations
 
 
-# In[ ]:
+# In[62]:
 
 
 def load_models(model_path=MODEL_PATH):
@@ -262,7 +266,7 @@ def load_models(model_path=MODEL_PATH):
     return loaded_models
 
 
-# In[ ]:
+# In[63]:
 
 
 # Export this notebook into script `.py` file
