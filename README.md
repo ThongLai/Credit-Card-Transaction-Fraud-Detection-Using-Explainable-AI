@@ -1,5 +1,9 @@
 # Credit Card Transaction Fraud Detection Using Explainable-AI (XAI)
 
+- **Run live notebook ([main.ipynb](https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/main.ipynb)):** [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/main?urlpath=%2Fdoc%2Ftree%2Fmain.ipynb)
+
+- **Models: [architectures](https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/tree/main/architectures)**<a name="models" id="models"></a>
+
 ## Description
 This project contains a credit card fraud detection system that leverages advanced machine learning algorithms, including neural networks and random forests, to identify fraudulent transactions. The project utilizes synthetic data from the Sparkov dataset of the credit card fraud detection dataset to train and evaluate the model.
 
