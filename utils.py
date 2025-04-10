@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[21]:
+# In[1]:
 
 
 MODEL_PATH = 'architectures/'
@@ -9,7 +9,7 @@ DATASET_PATH = 'dataset/'
 RANDOM_SEED = 42 # Set to `None` for the generator uses the current system time.
 
 
-# In[22]:
+# In[2]:
 
 
 import sys
@@ -30,7 +30,7 @@ print(f"CUDA version: `{tf_build_info.build_info['cuda_version']}`")
 print(f"Num GPUs Available: {len(list_physical_devices('GPU'))}")
 
 
-# In[23]:
+# In[ ]:
 
 
 import pandas as pd
@@ -41,19 +41,16 @@ from sklearn.utils import shuffle
 from imblearn.over_sampling import SMOTE
 
 import time
+import os
 import requests
 import shutil
+from tqdm import tqdm
 
 np.random.seed(RANDOM_SEED)
 
 
-# In[24]:
+# In[ ]:
 
-
-import os
-import requests
-import shutil
-from tqdm import tqdm  # Make sure tqdm is installed: pip install tqdm
 
 def download_file(url, save_path, file_name=None, extract=False, force_download=False):
     """Download a file and optionally extract if it's compressed."""
@@ -121,7 +118,7 @@ def download_dataset_from_kaggle(file_name=None, save_path=DATASET_PATH, extract
     )
 
 
-# In[25]:
+# In[ ]:
 
 
 def feature_engineering(data):
@@ -175,7 +172,7 @@ def feature_engineering(data):
     return data
 
 
-# In[26]:
+# In[ ]:
 
 
 def pre_processing(data, encoding=True):
@@ -233,7 +230,7 @@ def pre_processing(data, encoding=True):
     return x, y, data, transformations
 
 
-# In[27]:
+# In[ ]:
 
 
 def load_models(model_path=MODEL_PATH):
@@ -266,14 +263,6 @@ def load_models(model_path=MODEL_PATH):
 
 
 # In[ ]:
-
-
-
-
-
-# # Testing 
-
-# In[28]:
 
 
 # Export this notebook into script `.py` file
