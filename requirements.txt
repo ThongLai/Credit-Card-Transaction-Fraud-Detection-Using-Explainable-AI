@@ -13,6 +13,11 @@ imbalanced-learn>=0.0
 matplotlib>=3.10.1
 seaborn>=0.13.2
 
+#XAI Techniques
+shap>=0.47.1
+lime>=0.2.0.1
+anchor-exp>=0.0.2.0
+
 # Other utils
 requests>=2.32.3
 tqdm>=4.67.1
