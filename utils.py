@@ -124,6 +124,12 @@ def download_dataset_from_kaggle(file_name=None, save_path=DATASET_PATH, extract
 def feature_engineering(data):
     data = data.copy()
     
+    #----------Cleaning----------
+    # Remove null entries
+    data.dropna(inplace=True)
+    # Remove prefix `fraud-` in `merchant` feature
+    data['merchant'] = data['merchant'].str.replace('fraud_', '')
+    
     ## 1) Derive `age`, `age_group` feature from `dob`
     data['dob'] = pd.to_datetime(data['dob'])
     data['age'] = (pd.Timestamp.today() - data['dob']).dt.days // 365
@@ -184,7 +190,7 @@ def pre_processing(data, encoding=True, isTestSet=False):
     # non_fraud = non_fraud.sample(len(fraud))
     # data = pd.concat([non_fraud, fraud])
 
-    # Split up labels
+    #  ----------Split up labels----------
     x = data.drop(["is_fraud"], axis=1).to_numpy()
     y = data["is_fraud"]
 
@@ -193,7 +199,7 @@ def pre_processing(data, encoding=True, isTestSet=False):
     float_features = {col: data.columns.get_loc(col) for col in data.select_dtypes(float).columns}
     age_group_order = data['age_group'].cat.categories
     
-    # Perform data encoding
+    # ----------Perform data encoding----------
     transformations = {}
     if encoding:
           
@@ -206,11 +212,12 @@ def pre_processing(data, encoding=True, isTestSet=False):
             x[:, idx] = le.fit_transform(x[:, idx])
             transformations[col] = le  # Store for future reference
     
-    # Standardization
+    # ----------Standardization----------
     scaler = StandardScaler()
     x = scaler.fit_transform(x)
     transformations['scaler'] = scaler
-    
+
+    # ----------SMOTE technique----------
     # If the training data imbalanced we’ll address this using Synthetic Minority Oversampling Technique (SMOTE).
     # It is an oversampling technique that creates artificial minority class samples.
     # In our case, it creates synthetic fraud instances and so corrects the imbalance in our dataset.
