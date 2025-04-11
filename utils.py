@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[56]:
+# In[1]:
 
 
 MODEL_PATH = 'architectures/'
@@ -9,7 +9,7 @@ DATASET_PATH = 'dataset/'
 RANDOM_SEED = 42 # Set to `None` for the generator uses the current system time.
 
 
-# In[57]:
+# In[2]:
 
 
 import sys
@@ -30,7 +30,7 @@ print(f"CUDA version: `{tf_build_info.build_info['cuda_version']}`")
 print(f"Num GPUs Available: {len(list_physical_devices('GPU'))}")
 
 
-# In[58]:
+# In[3]:
 
 
 import pandas as pd
@@ -49,7 +49,7 @@ from tqdm import tqdm
 np.random.seed(RANDOM_SEED)
 
 
-# In[59]:
+# In[4]:
 
 
 def download_file(url, save_path, file_name=None, extract=False, force_download=False):
@@ -118,7 +118,7 @@ def download_dataset_from_kaggle(file_name=None, save_path=DATASET_PATH, extract
     )
 
 
-# In[60]:
+# In[5]:
 
 
 def feature_engineering(data):
@@ -172,10 +172,10 @@ def feature_engineering(data):
     return data
 
 
-# In[61]:
+# In[6]:
 
 
-def pre_processing(data, encoding=True):
+def pre_processing(data, encoding=True, isTest=False):
     data = data.copy()
     
     # # Balancing the data (without SMOTE)
@@ -213,7 +213,7 @@ def pre_processing(data, encoding=True):
     # If the training data imbalanced we’ll address this using Synthetic Minority Oversampling Technique (SMOTE).
     # It is an oversampling technique that creates artificial minority class samples.
     # In our case, it creates synthetic fraud instances and so corrects the imbalance in our dataset.
-    if y.value_counts()[0] != y.value_counts()[1]:
+    if not isTest and y.value_counts()[0] != y.value_counts()[1]:
         x, y = SMOTE().fit_resample(x, y)
         x, y = shuffle(x, y) # Then explicitly shuffle the data
         print('SMOTE is applied')
@@ -234,7 +234,7 @@ def pre_processing(data, encoding=True):
     return x, y, data, transformations
 
 
-# In[62]:
+# In[7]:
 
 
 def load_models(model_path=MODEL_PATH):
@@ -266,7 +266,7 @@ def load_models(model_path=MODEL_PATH):
     return loaded_models
 
 
-# In[63]:
+# In[8]:
 
 
 # Export this notebook into script `.py` file
