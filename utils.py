@@ -175,7 +175,7 @@ def feature_engineering(data):
 # In[6]:
 
 
-def pre_processing(data, encoding=True, isTest=False):
+def pre_processing(data, encoding=True, isTestSet=False):
     data = data.copy()
     
     # # Balancing the data (without SMOTE)
@@ -191,6 +191,7 @@ def pre_processing(data, encoding=True, isTest=False):
     categorical_features = {col: data.columns.get_loc(col) for col in data.select_dtypes('category').columns}
     int_features = {col: data.columns.get_loc(col) for col in data.select_dtypes(int).columns}
     float_features = {col: data.columns.get_loc(col) for col in data.select_dtypes(float).columns}
+    age_group_order = data['age_group'].cat.categories
     
     # Perform data encoding
     transformations = {}
@@ -213,7 +214,7 @@ def pre_processing(data, encoding=True, isTest=False):
     # If the training data imbalanced we’ll address this using Synthetic Minority Oversampling Technique (SMOTE).
     # It is an oversampling technique that creates artificial minority class samples.
     # In our case, it creates synthetic fraud instances and so corrects the imbalance in our dataset.
-    if not isTest and y.value_counts()[0] != y.value_counts()[1]:
+    if not isTestSet and y.value_counts()[0] != y.value_counts()[1]:
         x, y = SMOTE().fit_resample(x, y)
         x, y = shuffle(x, y) # Then explicitly shuffle the data
         print('SMOTE is applied')
@@ -230,6 +231,7 @@ def pre_processing(data, encoding=True, isTest=False):
         data[list(categorical_features.keys())] = data[list(categorical_features.keys())].astype('category')
         data[list(int_features.keys())] = data[list(int_features.keys())].astype(int)
         data[list(float_features.keys())] = data[list(float_features.keys())].astype(float)
+        data['age_group'] = data['age_group'].cat.reorder_categories(age_group_order, ordered=True)
           
     return x, y, data, transformations
 
