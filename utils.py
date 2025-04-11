@@ -129,7 +129,7 @@ def feature_engineering(data):
     data['age'] = (pd.Timestamp.today() - data['dob']).dt.days // 365
 
     # Define age bins (from 18 to 90 in 10-year increments)
-    age_bins = range(data['age'].min(), data['age'].max() + 10, 10)
+    age_bins = range(data['age'].min(), data['age'].max() + 11, 10)
     
     data['age_group'] = pd.cut(data['age'], bins=age_bins, labels=[f"{i}-{i+9}" for i in age_bins[:-1]], right=False)
 
