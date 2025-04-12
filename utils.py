@@ -243,7 +243,7 @@ def pre_processing(data, encoding=True, isTestSet=False):
     return x, y, data, transformations
 
 
-# In[17]:
+# In[7]:
 
 
 def load_models(models=[], model_path=MODEL_PATH):
@@ -265,6 +265,7 @@ def load_models(models=[], model_path=MODEL_PATH):
         
         try:
             model = tf.keras.models.load_model(full_path)
+            model._name = model_name
 
             # Print metadata
             print(f"\n=== Model: `{model_name}` ===")
