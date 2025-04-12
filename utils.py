@@ -259,6 +259,7 @@ def load_models(models=[], model_path=MODEL_PATH):
     # Get all available models if `model_names` is empty
     if not models or not models[0]:
         model_names = os.listdir(model_path)
+        print(f"[INFO] Found `{len(model_names)}` models in {model_path}")
     
     for model_name in model_names:
         full_path = os.path.join(model_path, model_name)
@@ -292,15 +293,28 @@ def load_models(models=[], model_path=MODEL_PATH):
 # In[8]:
 
 
-def save_predictions(model_name, y_predict, predictions_csv = os.path.join(DATASET_PATH, 'predictions.csv')):
-    # Read existing file or create new DataFrame
+def save_predictions(model_name, y_predict, predictions_csv=os.path.join(DATASET_PATH, 'predictions.csv')):
+    """
+    Save model predictions to a CSV file
+    
+    Args:
+        model_name: Name of the model
+        y_predict: Prediction array from model
+        predictions_csv: Path to save/update predictions
+    """
+    print(f"\n[INFO] Saving model `{model_name}` predictions into `{predictions_csv}`...")
+    
     try:
         predictions = pd.read_csv(predictions_csv)
+        print(f"[INFO] Loaded `{os.path.basename(predictions_csv)}` file.")
     except (FileNotFoundError, pd.errors.EmptyDataError):
         predictions = pd.DataFrame()
+        print(f"[INFO] No `{os.path.basename(predictions_csv)}` found or file is empty. Creating a new file.")
     
+    # Ensure y_predict is a 1D array and append to DataFrame
     predictions[model_name] = y_predict.flatten()
     predictions.to_csv(predictions_csv, index=False)
+    print(f"[INFO] Saved model `{model_name}` predictions.")
 
 
 # In[9]:
