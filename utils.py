@@ -243,14 +243,24 @@ def pre_processing(data, encoding=True, isTestSet=False):
     return x, y, data, transformations
 
 
-# In[7]:
+# In[17]:
 
 
-def load_models(model_path=MODEL_PATH):
+def load_models(models=[], model_path=MODEL_PATH):
     loaded_models = {}
-    print("\n===== MODEL METADATA =====\n")
+    model_names = models
     
-    for model_name in os.listdir(model_path):
+    print("\n===== MODEL METADATA =====\n")
+
+    # Convert single values into lists for consistent processing
+    if not isinstance(models, list):
+        model_names = [models]
+        
+    # Get all available models if `model_names` is empty
+    if not models or not models[0]:
+        model_names = os.listdir(model_path)
+    
+    for model_name in model_names:
         full_path = os.path.join(model_path, model_name)
         
         try:
@@ -271,6 +281,9 @@ def load_models(model_path=MODEL_PATH):
         except Exception as e:
             print(f"\n**Error loading model `{model_name}`: `{e}`")
             print("-"*50)
+
+    if models and isinstance(models, str):
+        loaded_models = loaded_models[models]
             
     return loaded_models
 
