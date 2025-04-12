@@ -292,6 +292,20 @@ def load_models(models=[], model_path=MODEL_PATH):
 # In[8]:
 
 
+def save_predictions(model_name, y_predict, predictions_csv = os.path.join(DATASET_PATH, 'predictions.csv')):
+    # Read existing file or create new DataFrame
+    try:
+        predictions = pd.read_csv(predictions_csv)
+    except (FileNotFoundError, pd.errors.EmptyDataError):
+        predictions = pd.DataFrame()
+    
+    predictions[model_name] = y_predict.flatten()
+    predictions.to_csv(predictions_csv, index=False)
+
+
+# In[9]:
+
+
 # Export this notebook into script `.py` file
 # jupyter nbconvert --to script utils.ipynb
 
