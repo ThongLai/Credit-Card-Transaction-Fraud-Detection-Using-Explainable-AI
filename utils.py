@@ -250,7 +250,7 @@ def load_models(models=[], model_path=MODEL_PATH):
     loaded_models = {}
     model_names = models
     
-    print("\n===== MODEL METADATA =====\n")
+    print("\n===== MODEL METADATA =====")
 
     # Convert single values into lists for consistent processing
     if not isinstance(models, list):
@@ -259,7 +259,7 @@ def load_models(models=[], model_path=MODEL_PATH):
     # Get all available models if `model_names` is empty
     if not models or not models[0]:
         model_names = os.listdir(model_path)
-        print(f"[INFO] Found `{len(model_names)}` models in {model_path}")
+        print(f"[INFO] Found [{len(model_names)}] models in {model_path}")
     
     for model_name in model_names:
         full_path = os.path.join(model_path, model_name)
