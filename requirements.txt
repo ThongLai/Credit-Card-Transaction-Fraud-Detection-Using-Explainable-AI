@@ -17,6 +17,7 @@ seaborn>=0.13.2
 shap>=0.47.1
 lime>=0.2.0.1
 anchor-exp>=0.0.2.0
+dice-ml>=0.11
 
 # Other utils
 requests>=2.32.3

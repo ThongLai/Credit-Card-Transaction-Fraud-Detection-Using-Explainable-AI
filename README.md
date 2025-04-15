@@ -15,6 +15,7 @@ This project gathers multiple state-of-the-art **Deep Learning models** used for
   - **SHAP:** Interactive visualizations (force plots, summary plots, dependence plots) that elucidate feature contributions.  
   - **LIME:** Local interpretable explanations (in progress) to detail individual predictions.  
   - **Anchors:** Rule-based explanations offering high-precision insights.
+  - **DiCE:** Generates "what-if" scenarios showing the smallest changes needed to flip a model's prediction
 - **Robust Evaluation:**  
   - Extensive testing on synthetic data with performance metrics to validate both model accuracy and interpretability.
   - Visual tools to explore feature impacts globally and locally, supporting transparent decision-making.
@@ -29,7 +30,7 @@ The complete workflow includes:
 3. **Prediction & Comparison:**  
    Running inference to generate predictions and comparing performance across models.
 4. **Explainability Analysis:**  
-   Applying XAI methods (SHAP, LIME, Anchors) to reveal and compare how features drive model predictions.
+   Applying XAI methods (SHAP, LIME, Anchors, DiCE) to reveal and compare how features drive model predictions.
 
 <p align="center">
     <img src="https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/visualization/Data%20Flow%20Diagram.png" width="50%" />
