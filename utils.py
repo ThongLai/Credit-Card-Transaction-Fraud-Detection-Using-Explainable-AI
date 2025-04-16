@@ -311,6 +311,13 @@ def save_predictions(model_name, y_predict, predictions_csv=os.path.join(DATASET
     except (FileNotFoundError, pd.errors.EmptyDataError):
         predictions = pd.DataFrame()
         print(f"[INFO] No `{os.path.basename(predictions_csv)}` found or file is empty. Creating a new file.")
+
+    
+    model_number = '_'.join(model_name.split('_')[0:2])
+
+    # Overwrite the old model results
+    if any(predictions.columns.str.contains(model_number)):
+        predictions.rename(columns={predictions.columns[predictions.columns.str.contains(model_number)][0]:model_name}, inplace=True)
     
     # Ensure y_predict is a 1D array and append to DataFrame
     predictions[model_name] = y_predict.flatten()
