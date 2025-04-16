@@ -14,7 +14,8 @@ venv.bak/
 .test_architectures/
 
 # Dataset
-dataset
+fraudTest.csv
+fraudTrain.csv
 
 =======
 >>>>>>> eb22309248dbce85088541be57c7352958d1e31b
