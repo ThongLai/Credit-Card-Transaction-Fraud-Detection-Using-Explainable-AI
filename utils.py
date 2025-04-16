@@ -5,7 +5,7 @@
 
 
 MODEL_PATH = 'architectures/'
-DATASET_PATH = 'dataset/'
+DATASET_PATH = 'data/'
 RANDOM_SEED = 42 # Set to `None` for the generator uses the current system time.
 
 
