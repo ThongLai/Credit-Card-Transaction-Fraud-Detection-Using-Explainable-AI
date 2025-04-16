@@ -39,6 +39,7 @@ import numpy as np
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.utils import shuffle
 from imblearn.over_sampling import SMOTE
+from sklearn.metrics import accuracy_score, roc_auc_score, classification_report
 
 import time
 import os
@@ -318,6 +319,48 @@ def save_predictions(model_name, y_predict, predictions_csv=os.path.join(DATASET
 
 
 # In[9]:
+
+
+def get_model_metrics_df(y_test, y_predict):
+    """
+    Calculate model metrics and return them as a DataFrame
+    
+    Parameters:
+    -----------
+    y_test : array-like
+        True labels
+    y_predict : array-like
+        Predicted probabilities
+        
+    Returns:
+    --------
+    pd.DataFrame
+        DataFrame containing model performance metrics
+    """
+    # Convert probabilities to binary predictions
+    y_predict_binary = np.round(y_predict).astype(int).squeeze()
+
+    # Calculate metrics
+    test_accuracy = accuracy_score(y_test, y_predict_binary)
+    roc_auc = roc_auc_score(y_test, y_predict)
+    
+    # Get detailed metrics from classification report
+    report_dict = classification_report(y_test, y_predict_binary, output_dict=True, zero_division=0)
+
+    # Create metrics DataFrame
+    metrics_df = pd.DataFrame({
+        'Metric': ['Accuracy', 'ROC AUC Score', 
+                  'Precision (Class 0)', 'Recall (Class 0)', 'F1-Score (Class 0)', 
+                  'Precision (Class 1)', 'Recall (Class 1)', 'F1-Score (Class 1)'],
+        'Value': [test_accuracy, roc_auc, 
+                 report_dict['0']['precision'], report_dict['0']['recall'], report_dict['0']['f1-score'],
+                 report_dict['1']['precision'], report_dict['1']['recall'], report_dict['1']['f1-score']]
+    })
+    
+    return metrics_df
+
+
+# In[10]:
 
 
 # Export this notebook into script `.py` file
