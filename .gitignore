@@ -17,6 +17,9 @@ venv.bak/
 fraudTest.csv
 fraudTrain.csv
 
+# Notebook pdf conversion
+XAI_methods.pdf
+
 =======
 >>>>>>> eb22309248dbce85088541be57c7352958d1e31b
 =======
