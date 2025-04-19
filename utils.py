@@ -30,7 +30,7 @@ print(f"CUDA version: `{tf_build_info.build_info['cuda_version']}`")
 print(f"Num GPUs Available: {len(list_physical_devices('GPU'))}")
 
 
-# In[28]:
+# In[3]:
 
 
 import pandas as pd
@@ -214,7 +214,7 @@ def pre_processing(data, encoding=True, isTestSet=False):
             transformations[col] = le  # Store for future reference
     
     # ----------Standardization----------
-    scaler = StandardScaler()
+    scaler = RobustScaler()
     x = scaler.fit_transform(x)
     transformations['scaler'] = scaler
 
@@ -365,103 +365,6 @@ def get_model_metrics_df(y_test, y_predict):
     })
     
     return metrics_df
-
-
-# In[16]:
-
-
-data_train = pd.read_csv(os.path.join(DATASET_PATH, 'fraudTrain.csv'), index_col=0)
-data_test = pd.read_csv(os.path.join(DATASET_PATH, 'fraudTest.csv'), index_col=0)
-
-
-# In[17]:
-
-
-data_train = feature_engineering(data_train)
-X_train, y_train, data_train, transformations_train = pre_processing(data_train)
-
-data_test = feature_engineering(data_test)
-X_test, y_test, data_test, transformations_test = pre_processing(data_test, isTestSet=True)
-
-
-# In[18]:
-
-
-data_test.info()
-
-
-# In[19]:
-
-
-def check_distribution(df, column):
-    """Analyze a column for both outliers and skewness"""
-    # Basic stats
-    print(f"--- Analysis for {column} ---")
-    desc = df[column].describe()
-    print(f"Mean: {desc['mean']:.4f}, Median: {df[column].median():.4f}")
-    print(f"Min: {desc['min']:.4f}, Max: {desc['max']:.4f}")
-    
-    # Check skewness
-    skew = df[column].skew()
-    print(f"Skewness: {skew:.4f}")
-    if abs(skew) < 0.5:
-        print("Distribution is approximately symmetric")
-    elif abs(skew) < 1:
-        print("Distribution is moderately skewed")
-    else:
-        print("Distribution is highly skewed")
-    
-    # Check for outliers using IQR
-    Q1 = desc['25%']
-    Q3 = desc['75%']
-    IQR = Q3 - Q1
-    lower = Q1 - 1.5*IQR
-    upper = Q3 + 1.5*IQR
-    outliers = ((df[column] < lower) | (df[column] > upper)).sum()
-    
-    print(f"Potential outliers found: {outliers} ({outliers/len(df)*100:.2f}%)")
-    
-    # Create visualization
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
-    
-    # Histogram with KDE
-    sns.histplot(df[column], kde=True, ax=ax1)
-    ax1.axvline(desc['mean'], color='r', linestyle='-', label='Mean')
-    ax1.axvline(df[column].median(), color='g', linestyle='--', label='Median')
-    ax1.set_title(f'Distribution of {column}')
-    ax1.legend()
-    
-    # Box plot
-    sns.boxplot(x=df[column], ax=ax2)
-    ax2.set_title(f'Box Plot of {column}')
-    
-    plt.tight_layout()
-    plt.show()
-
-
-# In[24]:
-
-
-import seaborn as sns
-
-
-# In[27]:
-
-
-# Usage example
-check_distribution(data_test, 'amt')
-
-
-# In[21]:
-
-
-import matplotlib.pyplot as plt
-
-
-# In[ ]:
-
-
-
 
 
 # In[10]:
