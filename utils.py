@@ -195,7 +195,7 @@ def feature_engineering(data):
 # In[6]:
 
 
-def pre_processing(data, encoding=True, isTestSet=False):
+def pre_processing(data, transformations={}, isTestSet=False):
     data = data.copy()
     
     # # Balancing the data (without SMOTE)
@@ -212,25 +212,27 @@ def pre_processing(data, encoding=True, isTestSet=False):
     int_features = {col: data.columns.get_loc(col) for col in data.select_dtypes(int).columns}
     float_features = {col: data.columns.get_loc(col) for col in data.select_dtypes(float).columns}
     age_group_order = data['age_group'].cat.categories
-    
+
     # ----------Perform data encoding----------
-    transformations = {}
-    if encoding:
-          
-        # print(f'One Hot Encoding is applied for `{list(categorical_features.keys())}`')
-        # data = pd.get_dummies(data, prefix=list(categorical_features.keys()), columns=list(categorical_features.keys()), dtype='category')
-          
-        print(f'Ordinal-Encoding is applied for `{list(categorical_features.keys())}`')
-        for col, idx in categorical_features.items():
+    print(f'Ordinal-Encoding is applied for `{list(categorical_features.keys())}`')
+    for col, idx in categorical_features.items():
+        if transformations.get(col):
+            le = transformations[col]
+            x[:, idx] = le.transform(x[:, idx])
+        else:
             le = LabelEncoder()
             x[:, idx] = le.fit_transform(x[:, idx])
             transformations[col] = le  # Store for future reference
     
     # ----------Standardization----------
-    scaler = RobustScaler()
-    x = scaler.fit_transform(x)
-    transformations['scaler'] = scaler
-
+    if transformations.get('scaler'):
+        scaler = transformations['scaler']
+        x = scaler.transform(x)
+    else:
+        scaler = RobustScaler()
+        x = scaler.fit_transform(x)
+        transformations['scaler'] = scaler
+        
     # ----------SMOTE technique----------
     # If the training data imbalanced we’ll address this using Synthetic Minority Oversampling Technique (SMOTE).
     # It is an oversampling technique that creates artificial minority class samples.
@@ -244,7 +246,6 @@ def pre_processing(data, encoding=True, isTestSet=False):
         x_unscaled = transformations['scaler'].inverse_transform(x)
         x_unscaled = x_unscaled.astype(object)
 
-
         for col, idx in categorical_features.items():
             x_unscaled[:, idx] = transformations[col].inverse_transform(x_unscaled[:, idx].astype(int))
         
@@ -253,7 +254,7 @@ def pre_processing(data, encoding=True, isTestSet=False):
         data[list(int_features.keys())] = data[list(int_features.keys())].astype(int)
         data[list(float_features.keys())] = data[list(float_features.keys())].astype(float)
         data['age_group'] = data['age_group'].cat.reorder_categories(age_group_order, ordered=True)
-          
+
     return x, y, data, transformations
 
 
