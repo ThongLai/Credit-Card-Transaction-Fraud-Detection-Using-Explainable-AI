@@ -125,22 +125,23 @@ def download_dataset_from_kaggle(file_name=None, save_path=DATASET_PATH, extract
 def feature_engineering(data):
     data = data.copy()
     
-    #----------Cleaning----------
+    # ---------- Cleaning ----------
     # Remove null entries
     data.dropna(inplace=True)
-    # Remove prefix `fraud-` in `merchant` feature
+    
+    # Remove prefix `fraud_` in `merchant` feature
     data['merchant'] = data['merchant'].str.replace('fraud_', '')
     
-    ## 1) Derive `age`, `age_group` feature from `dob`
+    ## 1) Derive `age` and `age_group` features from `dob`
     data['dob'] = pd.to_datetime(data['dob'])
     data['age'] = (pd.Timestamp.today() - data['dob']).dt.days // 365
 
-    # Define age bins (from 18 to 90 in 10-year increments)
+    # Define age bins (from minimum age to maximum age rounded up)
     age_bins = range(data['age'].min(), data['age'].max() + 11, 10)
-    
-    data['age_group'] = pd.cut(data['age'], bins=age_bins, labels=[f"{i}-{i+9}" for i in age_bins[:-1]], right=False)
+    data['age_group'] = pd.cut(data['age'], bins=age_bins, 
+                               labels=[f"{i}-{i+9}" for i in age_bins[:-1]], right=False)
 
-    ## 2) Derive `dist` feature from `lat`,`long` and `merch_lat`, `merch_long`
+    ## 2) Derive `dist` feature from `lat`, `long`, `merch_lat`, and `merch_long`
     def haversine_distance(lat1, lon1, lat2, lon2):
         # Convert decimal degrees to radians
         lat1, lon1, lat2, lon2 = map(np.radians, [lat1, lon1, lat2, lon2])
@@ -148,16 +149,13 @@ def feature_engineering(data):
         # Haversine formula
         dlat = lat2 - lat1
         dlon = lon2 - lon1
-        
         a = np.sin(dlat/2.0)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon/2.0)**2
         c = 2 * np.arcsin(np.sqrt(a))
         
-        # Radius of earth in kilometers
+        # Earth's radius in kilometers
         r = 6371
-
         return c * r
 
-    # Calculate distances and create new column
     data['dist'] = haversine_distance(
         data['lat'],
         data['long'],
@@ -165,14 +163,29 @@ def feature_engineering(data):
         data['merch_long']
     )
 
-    # Move label columns back at the end
+    ## 3) Handle the `unix_time` column effectively
+    # Convert `unix_time` to a datetime object and extract temporal features
+    if 'unix_time' in data.columns:
+        # Convert unix_time to datetime (assumes seconds; adjust unit if needed)
+        data['datetime'] = pd.to_datetime(data['unix_time'], unit='s')
+        
+        # Extract features: hour, day of week, and month
+        data['hour'] = data['datetime'].dt.hour.astype('category')
+        data['day_of_week'] = data['datetime'].dt.dayofweek.astype('category')  # Monday=0, Sunday=6
+        data['month'] = data['datetime'].dt.month.astype('category')
+        
+        # Drop the original unix_time and intermediate datetime columns if not required
+        data.drop(columns=['unix_time', 'datetime'], inplace=True)
+    
+    # Move the label column to the end for consistency
     data.insert(len(data.columns)-1, "is_fraud", data.pop("is_fraud"))
 
-     # Drop unccessary columns
-    drop_cols = ["trans_date_trans_time", "cc_num","first","last","street","city", "state", "zip","job", 'dob',"trans_num"]
+    # ---------- Drop Unnecessary Columns ----------
+    drop_cols = ["trans_date_trans_time", "cc_num", "first", "last", 
+                 "street", "city", "state", "zip", "job", 'dob', "trans_num"]
     data.drop(columns=drop_cols, axis=1, inplace=True)
 
-    # Convert categorical coulumns
+    # Convert categorical columns (object and category) appropriately
     categorical_features = data.select_dtypes(include=['object', 'category']).columns.to_list()
     data[categorical_features] = data[categorical_features].astype('category')
 
