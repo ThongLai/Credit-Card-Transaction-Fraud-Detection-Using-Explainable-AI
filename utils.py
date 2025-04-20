@@ -170,9 +170,13 @@ def feature_engineering(data):
         data['datetime'] = pd.to_datetime(data['unix_time'], unit='s')
         
         # Extract features: hour, day of week, and month
-        data['hour'] = data['datetime'].dt.hour.astype('category')
-        data['day_of_week'] = data['datetime'].dt.dayofweek.astype('category')  # Monday=0, Sunday=6
-        data['month'] = data['datetime'].dt.month.astype('category')
+        data['hour'] = data['datetime'].dt.hour
+
+        ordered_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] # Reorder the categories
+        data['day_of_week'] = data['datetime'].dt.day_name().astype('category')
+        data['day_of_week'] = data['day_of_week'].cat.reorder_categories(ordered_days, ordered=True)
+        
+        data['month'] = data['datetime'].dt.month
         
         # Drop the original unix_time and intermediate datetime columns if not required
         data.drop(columns=['unix_time', 'datetime'], inplace=True)
@@ -274,7 +278,7 @@ def load_models(models=[], model_path=MODEL_PATH):
     # Get all available models if `model_names` is empty
     if not models or not models[0]:
         model_names = os.listdir(model_path)
-        print(f"[INFO] Found [{len(model_names)}] models in {model_path}")
+        print(f"[INFO] Found [{len(model_names)}] models in `{model_path}`")
     
     for model_name in model_names:
         full_path = os.path.join(model_path, model_name)
