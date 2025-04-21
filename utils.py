@@ -391,13 +391,13 @@ def get_model_metrics_df(y_test, y_predict):
 
 # Save `dict()` into `.json` files
 def saveJSON(data, json_path="data.json"):
-    with open(name, 'w', encoding='utf-8') as f:
+    with open(json_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
 # Load `.json` files
 def loadJSON(json_path='data.json'):
-    with open(name) as data_json:
-        data = json.load(data_json)
+    with open(json_path) as f:
+        data = json.load(f)
     return data
 
 
