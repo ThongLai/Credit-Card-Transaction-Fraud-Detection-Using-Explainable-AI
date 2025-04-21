@@ -5,7 +5,7 @@
 
 
 MODEL_PATH = 'architectures/'
-DATASET_PATH = 'data/'
+DATA_PATH = 'data/'
 RANDOM_SEED = 42 # Set to `None` for the generator uses the current system time.
 
 
@@ -46,6 +46,7 @@ import os
 import requests
 import shutil
 from tqdm import tqdm
+import json
 
 np.random.seed(RANDOM_SEED)
 
@@ -103,7 +104,7 @@ def download_file(url, save_path, file_name=None, extract=False, force_download=
     print(f"| Succeeded")
     return response
     
-def download_dataset_from_kaggle(file_name=None, save_path=DATASET_PATH, extract=True, force_download=False,
+def download_dataset_from_kaggle(file_name=None, save_path=DATA_PATH, extract=True, force_download=False,
                                  dataset_url="datasets/download/kartik2112/fraud-detection"):
     # Download the dataset from Kaggle
     BASE_URL = "https://www.kaggle.com/api/v1"
@@ -312,7 +313,7 @@ def load_models(models=[], model_path=MODEL_PATH):
 # In[8]:
 
 
-def save_predictions(model_name, y_predict, predictions_csv=os.path.join(DATASET_PATH, 'predictions.csv')):
+def save_predictions(model_name, y_predict, predictions_csv=os.path.join(DATA_PATH, 'predictions.csv')):
     """
     Save model predictions to a CSV file
     
@@ -388,6 +389,18 @@ def get_model_metrics_df(y_test, y_predict):
 # In[10]:
 
 
-# Export this notebook into script `.py` file
-# jupyter nbconvert --to script utils.ipynb
+# Save `dict()` into `.json` files
+def saveJSON(data, json_path="data.json"):
+    with open(name, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
 
+# Load `.json` files
+def loadJSON(json_path='data.json'):
+    with open(name) as data_json:
+        data = json.load(data_json)
+    return data
+
+
+# Export this notebook into script `.py` file:
+# 
+# `jupyter nbconvert --to script utils.ipynb`
