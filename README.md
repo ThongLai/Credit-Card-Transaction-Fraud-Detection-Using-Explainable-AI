@@ -6,7 +6,16 @@
 
 ## Description
 
-This project gathers multiple state-of-the-art **Deep Learning models** used for credit card fraud detection and applies **Explainable AI (XAI)** techniques to enhance their interpretability and enable effective model comparison. We leverage synthetic data from the Sparkov dataset to train and evaluate our models.
+Credit card fraud represents an important and growing challenge in the financial sector, causing
+significant monetary losses worldwide. According to the data from the UK Finance, fraudsters
+stole over £1.3 billion in 2021 alone through authorised and unauthorised fraud, with card
+fraud accounting for a significant part of these damages [^ukfinance2022]. Detection of
+fraud transactions presents several important challenges that increase the need for advanced
+computational approaches.
+
+The project utilized and evaluated the **XAI methods** on several **Deep Learning**
+architectures that are widely known to be used in detecting credit card transaction fraud, including **CNN** and **LSTM**
+with attention mechanisms, trained on **Sparkov's** synthetic dataset. The main contribution lies in the integration and comparative analysis of three Explainable AI methods: **SHAP**, **LIME** and **Anchors**. Research further evaluates the effectiveness of each XAI method based on **Faithfulness**, **Monotonicity**, and **Completeness** metrics. 
 
 **Key Features:**
 - **Multi-Model Comparison:**  
@@ -16,20 +25,24 @@ This project gathers multiple state-of-the-art **Deep Learning models** used for
   - **LIME:** Local interpretable explanations (in progress) to detail individual predictions.  
   - **Anchors:** Rule-based explanations offering high-precision insights.
 - **Robust Evaluation:**  
-  - Extensive testing on synthetic data with performance metrics to validate both model accuracy and interpretability.
-  - Visual tools to explore feature impacts globally and locally, supporting transparent decision-making.
+  - Visual tools to explore feature impacts locally, supporting transparent decision-making.
+  - Extensive testing on synthetic data with XAI performance metrics to validate both model interpretability.
 
 ## System Architecture
 
-The complete workflow includes:
+The fraud detection system using XAI comprises several integrated modules:
+
 1. **Data & Model Collection:**  
-   Obtaining pre-trained fraud detection models and synthetic transaction data.
-2. **Model Development Pipeline:**  
-   Steps include data preprocessing, feature engineering, model training, evaluation, and hyperparameter tuning.
-3. **Prediction & Comparison:**  
-   Running inference to generate predictions and comparing performance across models.
-4. **Explainability Analysis:**  
-   Applying XAI methods (SHAP, LIME, Anchors) to reveal and compare how features drive model predictions.
+  Obtaining synthetic transaction data and collecting fraud detection models architectures.
+2. **Data Preprocessing:**  
+  Raw transaction data is cleaned, normalised, and balanced using the **SMOTE** method.
+3. **Model Training:**  
+  Separate pipelines are implemented for training the **CNN** and **LSTM** models.
+4. **XAI Integration:**  
+  Post-training, XAI techniques are applied to generate explanations
+for model predictions.
+5. **Performance Evaluation:**  
+  Comprehensive XAI evaluation metrics, including **Faithfulness**, **Monotonicity**, and **Completeness** are computed.
 
 ```mermaid
 ---
@@ -180,6 +193,6 @@ flowchart TD
 - **Synthetic Data Generation**: To generate synthetic credit card transaction data, including fraudulent transactions, refer to the [Sparkov Data Generation repository](https://github.com/namebrandon/Sparkov_Data_Generation).
 - **Combined Dataset**: The combined dataset from Sparkov Data Generation, converted into a standard format, can be accessed [here on Kaggle](https://www.kaggle.com/datasets/kartik2112/fraud-detection).
 
-This repository is a valuable resource for researchers and practitioners interested in the intersection of fraud detection and explainable AI, providing a foundation for further exploration and development in this critical area of financial security.
+This repository is a valuable resource for researchers and practitioners interested in the intersection of fraud detection and explainable AI , providing a foundation for further exploration and development in this critical area of financial security.
 
-This repository provides a comprehensive resource for researchers and practitioners focused on leveraging explainable AI to improve the transparency and performance of deep learning models in credit card fraud detection.
+[^ukfinance2022]: UK Finance. (2022). *Annual Fraud Report 2022*. https://www.ukfinance.org.uk/policy-and-guidance/reports-and-publications/annual-fraud-report-2022
