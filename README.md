@@ -195,4 +195,24 @@ flowchart TD
 
 This repository is a valuable resource for researchers and practitioners interested in the intersection of fraud detection and explainable AI , providing a foundation for further exploration and development in this critical area of financial security.
 
+## Project Directory Hierarchy
+```
+Project Root/
+├── architectures/ .................... Trained model storage  
+│   ├── model_1_Siddhartha_CNN_acc99/  
+│   └── model_2_Ibtissam_LSTM_acc98/  
+├── data/ ............................. Data files and results  
+│   ├── predictions.csv  
+│   ├── stratified_samples.csv  
+│   └── xai_metrics.json  
+├── visualization/ .................... Visualization outputs  
+├── Ibtissam_LSTM.ipynb ............... LSTM model implementation  
+├── README.md ......................... Project brief  
+├── requirements.txt .................. Dependencies  
+├── Siddhartha_CNN.ipynb .............. CNN model implementation  
+├── XAI_methods.ipynb ................. Explainable AI methods  
+├── utils.py .......................... Utility functions  
+└── .gitignore ........................ Git configuration  
+```
+
 [^ukfinance2022]: UK Finance. (2022). *Annual Fraud Report 2022*. https://www.ukfinance.org.uk/policy-and-guidance/reports-and-publications/annual-fraud-report-2022
