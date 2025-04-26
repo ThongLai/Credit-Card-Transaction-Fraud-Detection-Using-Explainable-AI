@@ -1,0 +1,132 @@
+---
+config:
+  layout: dagre
+---
+flowchart LR
+ subgraph inputs["Input Layer (15×1)"]
+        i1(("•"))
+        i2(("•"))
+        i3(("•"))
+        i4(("•"))
+        i5(("•"))
+        i15[("•<br>↓<br>•")]
+  end
+ subgraph conv1["Conv1D Layer (64 filters)"]
+        c1_1(("•"))
+        c1_2(("•"))
+        c1_3(("•"))
+        c1_dots["..."]
+        c1_64(("•"))
+  end
+ subgraph bn["Batch Norm"]
+        bn1[("μ,σ²")]
+  end
+ subgraph conv2["Conv1D (32 filters)"]
+        c2_1(("•"))
+        c2_2(("•"))
+        c2_dots["..."]
+        c2_32(("•"))
+  end
+ subgraph drop1["Dropout (0.3)"]
+        d1[("30%<br>off")]
+  end
+ subgraph dense1["Dense (64)"]
+        n1_1(("•"))
+        n1_2(("•"))
+        n1_dots["..."]
+        n1_64(("•"))
+  end
+ subgraph flatten["Flatten"]
+        flat[("832<br>units")]
+  end
+ subgraph dense2["Dense (64)"]
+        n2_1(("•"))
+        n2_2(("•"))
+        n2_dots["..."]
+        n2_64(("•"))
+  end
+ subgraph drop2["Dropout (0.2)"]
+        d2[("20%<br>off")]
+  end
+ subgraph output["Output"]
+        out(("σ"))
+  end
+    inputs --> conv1
+    conv1 --> bn
+    bn --> conv2
+    conv2 --> drop1
+    drop1 --> dense1
+    dense1 --> flatten
+    flatten --> dense2
+    dense2 --> drop2
+    drop2 --> output
+    i1 -. sliding window .- c1_1
+    i2 -. sliding window .- c1_1
+    c1_1 -. channel info .- bn
+    bn -. normalized features .- c2_1
+    c2_1 -. regularized .- d1
+    d1 -. dense transform .- n1_64
+    n1_64 -. flattened .- flat
+    flat -. dense features .- n2_64
+    n2_64 -. regularized .- d2
+    d2 -. prediction .- out
+     i1:::input
+     i2:::input
+     i3:::input
+     i4:::input
+     i5:::input
+     i15:::input
+     c1_1:::conv
+     c1_2:::conv
+     c1_3:::conv
+     c1_dots:::dots
+     c1_64:::conv
+     bn1:::batchnorm
+     c2_1:::conv2
+     c2_2:::conv2
+     c2_dots:::dots
+     c2_32:::conv2
+     d1:::dropout
+     n1_1:::dense
+     n1_2:::dense
+     n1_dots:::dots
+     n1_64:::dense
+     flat:::flatten
+     n2_1:::dense
+     n2_2:::dense
+     n2_dots:::dots
+     n2_64:::dense
+     d2:::dropout
+     out:::output
+     inputs:::subgraphLabel
+     conv1:::subgraphLabel
+     bn:::subgraphLabel
+     conv2:::subgraphLabel
+     drop1:::subgraphLabel
+     dense1:::subgraphLabel
+     flatten:::subgraphLabel
+     dense2:::subgraphLabel
+     drop2:::subgraphLabel
+     output:::subgraphLabel
+    classDef input fill:#0099ff,stroke:#0066cc,stroke-width:3px,color:white,font-weight:bold,font-size:16px
+    classDef conv fill:#ff9800,stroke:#e65100,stroke-width:3px,color:white,font-weight:bold,font-size:16px
+    classDef conv2 fill:#ff7043,stroke:#e64a19,stroke-width:3px,color:white,font-weight:bold,font-size:16px
+    classDef batchnorm fill:#9c27b0,stroke:#7b1fa2,stroke-width:3px,color:white,font-weight:bold,font-size:16px
+    classDef dropout fill:#ff5722,stroke:#d84315,stroke-width:3px,color:white,font-weight:bold,font-size:16px
+    classDef dense fill:#4caf50,stroke:#2e7d32,stroke-width:3px,color:white,font-weight:bold,font-size:16px
+    classDef flatten fill:#607d8b,stroke:#455a64,stroke-width:3px,color:white,font-weight:bold,font-size:16px
+    classDef output fill:#673ab7,stroke:#4527a0,stroke-width:3px,color:white,font-weight:bold,font-size:18px
+    classDef dots fill:#f5f5f5,stroke:#9e9e9e,stroke-width:2px,color:#424242,font-weight:bold,font-size:20px
+    style inputs fill:#e3f2fd,stroke:#1565c0,stroke-width:4px,color:#0d47a1,font-weight:bold,font-size:18px
+    style conv1 fill:#fff3e0,stroke:#e65100,stroke-width:4px,color:#e65100,font-weight:bold,font-size:18px
+    style bn fill:#f3e5f5,stroke:#8e24aa,stroke-width:4px,color:#4a148c,font-weight:bold,font-size:18px
+    style conv2 fill:#ffccbc,stroke:#e64a19,stroke-width:4px,color:#bf360c,font-weight:bold,font-size:18px
+    style drop1 fill:#ffccbc,stroke:#d84315,stroke-width:4px,color:#bf360c,font-weight:bold,font-size:18px
+    style dense1 fill:#c8e6c9,stroke:#2e7d32,stroke-width:4px,color:#1b5e20,font-weight:bold,font-size:18px
+    style flatten fill:#cfd8dc,stroke:#455a64,stroke-width:4px,color:#263238,font-weight:bold,font-size:18px
+    style dense2 fill:#a5d6a7,stroke:#388e3c,stroke-width:4px,color:#1b5e20,font-weight:bold,font-size:18px
+    style drop2 fill:#ffe0b2,stroke:#ff8f00,stroke-width:4px,color:#e65100,font-weight:bold,font-size:18px
+    style output fill:#e1f5fe,stroke:#0288d1,stroke-width:4px,color:#01579b,font-weight:bold,font-size:18px
+
+    classDef subgraphLabel font-size:18px,stroke-width:2px,color:#00000
+    class inputs,conv1,bn,conv2,drop1,dense1,flatten,dense2,drop2,output subgraphLabel
