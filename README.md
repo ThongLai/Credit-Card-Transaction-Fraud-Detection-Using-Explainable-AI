@@ -1,5 +1,8 @@
 # Explainable-AI (XAI) in Deep Learning Models for Credit Card Fraud Detection
 
+- **Documentation:** [Report Documentation.pdf
+](https://docs.google.com/viewer?url=https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/Report%20Documentation.pdf?raw=true)
+
 - **Run the live main notebook ([XAI_methods.ipynb](https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/XAI_methods.ipynb)):** [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/main?urlpath=%2Fdoc%2Ftree%2FXAI_methods.ipynb)
 
 - **Models: [architectures](https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/tree/main/architectures)**<a name="models" id="models"></a>
