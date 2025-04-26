@@ -21,7 +21,7 @@ with attention mechanisms, trained on **Sparkov's** synthetic dataset. The main 
 - **Multi-Model Comparison:**  
   Assess and compare different deep learning architectures for fraud detection.
 - **Explainable AI Integration:**  
-  - **SHAP:** Interactive visualizations (force plots, summary plots, dependence plots) that elucidate feature contributions.  
+  - **SHAP:** Interactive visualisations (force plots, summary plots, dependence plots) that elucidate feature contributions.  
   - **LIME:** Local interpretable explanations (in progress) to detail individual predictions.  
   - **Anchors:** Rule-based explanations offering high-precision insights.
 - **Robust Evaluation:**  
@@ -211,7 +211,7 @@ Project Root/
 │   ├── predictions.csv  
 │   ├── stratified_samples.csv  
 │   └── xai_metrics.json  
-├── visualization/ ............................... Visualization outputs  
+├── visualisation/ ............................... Visualisation outputs  
 ├── README.md .................................... Project brief  
 ├── Report Documentation.pdf ..................... Project Report Documentation
 └── .gitignore ................................... Git configuration  
