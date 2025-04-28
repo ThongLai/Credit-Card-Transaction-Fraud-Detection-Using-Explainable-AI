@@ -241,9 +241,6 @@ flowchart TD
 </p>
 
 ## Key Findings
-
-> **Summary:** SHAP demonstrated the highest faithfulness among XAI methods, providing the most reliable feature attributions.
-
 - **Explainability Analysis**:
   - **SHAP** demonstrated the highest faithfulness (0.602), providing the most reliable feature attributions.
   - **LIME** showed balanced performance across metrics with good completeness (0.217).
