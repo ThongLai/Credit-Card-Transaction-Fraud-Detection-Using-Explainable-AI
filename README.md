@@ -8,7 +8,9 @@
 - **Documentation:** [Report Documentation.pdf
 ](https://docs.google.com/viewer?url=https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/Report%20Documentation.pdf?raw=true)
 
-- **Run the live main notebook ([XAI_methods.ipynb](https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/XAI_methods.ipynb)):** [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/main?urlpath=%2Fdoc%2Ftree%2FXAI_methods.ipynb)
+- **Main analysis notebook:** [XAI_methods.ipynb](https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/XAI_methods.ipynb)
+
+- **Run the live main notebook:** [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/main?urlpath=%2Fdoc%2Ftree%2FXAI_methods.ipynb)
 
 - **Models:** [architectures](https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/tree/main/architectures)<a name="models" id="models"></a>
 
@@ -193,13 +195,61 @@ flowchart TD
     linkStyle 34 stroke:#d277ff,stroke-width:2px,fill:none
     linkStyle 35 stroke:#d277ff,stroke-width:2px,fill:none
 ```
+<p align="center">
+  <br>
+  <em>System Architecture Diagram</em>
+  <br>
+  <em><small>Can't see the diagram? <a href="https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/visualisation/system_architecture.png">View system architecture image</a></small></em>
+</p>
 
-<p align="center"><em>System Architecture Diagram</em></p>
 
 ## Data Sources
 
 - **Synthetic Data Generation**: To generate synthetic credit card transaction data, including fraudulent transactions, refer to the [Sparkov Data Generation repository](https://github.com/namebrandon/Sparkov_Data_Generation).
 - **Combined Dataset**: The combined dataset from Sparkov Data Generation, converted into a standard format, can be accessed [here on Kaggle](https://www.kaggle.com/datasets/kartik2112/fraud-detection).
+
+## XAI Methods Evaluation
+
+### Summary Performance Results
+| Method  | Faithfulness | Monotonicity | Completeness |
+|---------|--------------|--------------|--------------|
+| SHAP    | 0.602        | 0.447        | 0.171        |
+| LIME    | 0.325        | 0.467        | 0.217        |
+| Anchors | 0.364        | 0.478        | 0.028        |
+
+## Key Visualizations
+
+### Feature Importance Analysis
+<p align="center">
+  <img src="https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/visualisation/shap_summary_global_of_CNN.png?raw=true" alt="SHAP Feature Importance" width="500">
+  <br>
+  <em>SHAP values showing global feature importance across the dataset</em>
+</p>
+
+### Local Explanation Example
+<p align="center">
+  <img src="https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/visualisation/lime_explain_plot_of_LSTM_at_1044.png?raw=true" alt="LIME Explanation" width="500">
+  <br>
+  <em>LIME explaining an individual fraud prediction</em>
+</p>
+
+### Rule-Based Insights
+<p align="center">
+  <img src="https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/visualisation/anchors_notebook_of_LSTM_at_2025.png?raw=true" alt="Anchors Rules" width="1000">
+  <br>
+  <em>Anchors generating interpretable rules for fraud detection</em>
+</p>
+
+## Key Findings
+
+> **Summary:** SHAP demonstrated the highest faithfulness among XAI methods, providing the most reliable feature attributions.
+
+- **Explainability Analysis**:
+  - **SHAP** demonstrated the highest faithfulness (0.602), providing the most reliable feature attributions.
+  - **LIME** showed balanced performance across metrics with good completeness (0.217).
+  - **Anchors** excelled in monotonicity (0.478) but with limited coverage (0.028).
+- **Feature Importance**: Transaction `amount`, `merchant` `category`, and transaction `hou`r emerged as the most influential features across both models.
+- **Confidence Analysis**: XAI methods showed varying performance across prediction confidence levels, with SHAP maintaining the most consistent performance (0.544-0.629 faithfulness) across all confidence bins.
 
 This repository is a valuable resource for researchers and practitioners interested in the intersection of fraud detection and explainable AI , providing a foundation for further exploration and development in this critical area of financial security.
 
