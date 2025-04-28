@@ -269,7 +269,8 @@ Project Root/
 ├── visualisation/ ............................... Visualisation outputs  
 ├── README.md .................................... Project brief  
 ├── Report Documentation.pdf ..................... Project Report Documentation
-└── .gitignore ................................... Git configuration  
+├── presentation.pdf ............................. Project Presentation
+└── .gitignore ................................... Git configuration
 ```
 
 [^ukfinance2022]: UK Finance. (2022). *Annual Fraud Report 2022*. https://www.ukfinance.org.uk/policy-and-guidance/reports-and-publications/annual-fraud-report-2022
