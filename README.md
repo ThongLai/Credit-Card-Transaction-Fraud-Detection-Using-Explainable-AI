@@ -6,7 +6,7 @@
 [![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/pulls)
 
 - **Documentation:** [Report Documentation.pdf
-](https://docs.google.com/viewer?url=https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/Report%20Documentation.pdf?raw=true)
+](https://docs.google.com/viewer?url=github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/Report%20Documentation.pdf?raw=true)
 
 - **Main analysis notebook:** [XAI_methods.ipynb](https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/XAI_methods.ipynb)
 
@@ -42,8 +42,8 @@ with attention mechanisms, trained on **Sparkov's** synthetic dataset. The main 
 
 The fraud detection system using XAI comprises several integrated modules:
 
-1. **Data & Model Collection:**  
-  Obtaining synthetic transaction data and collecting fraud detection models architectures.
+1. **Data Collection & Model Design:**  
+  Gathers synthetic transaction data (**Sparkov** dataset) and design model architectures (CNN, LSTM). Data is loaded and versioned for reproducibility.
 2. **Data Preprocessing:**  
   Raw transaction data is cleaned, normalised, and balanced using the **SMOTE** method.
 3. **Model Training:**  
@@ -51,7 +51,7 @@ The fraud detection system using XAI comprises several integrated modules:
 4. **XAI Integration:**  
   Post-training, XAI techniques are applied to generate explanations
 for model predictions.
-5. **Performance Evaluation:**  
+5. **Explainability Performance Evaluation:**  
   Comprehensive XAI evaluation metrics, including **Faithfulness**, **Monotonicity**, and **Completeness** are computed.
 
 ```mermaid
