@@ -1,4 +1,4 @@
-# Explainable-AI (XAI) in Deep Learning Models for Credit Card Fraud Detection
+# Explainable AI (XAI) in Deep Learning Models for Credit Card Fraud Detection
 
 [![Python](https://img.shields.io/badge/python-3.10.11-blue.svg)](https://www.python.org/downloads/release/python-31011/)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-2.10.1-orange.svg)](https://www.tensorflow.org/versions/r2.10/api_docs)
@@ -25,7 +25,17 @@ computational approaches.
 
 The project utilized and evaluated the **XAI methods** on several **Deep Learning**
 architectures that are widely known to be used in detecting credit card transaction fraud, including **CNN** and **LSTM**
-with attention mechanisms, trained on **Sparkov's** synthetic dataset. The main contribution lies in the integration and comparative analysis of three Explainable AI methods: **SHAP**, **LIME** and **Anchors**. Research further evaluates the effectiveness of each XAI method based on **Faithfulness**, **Monotonicity**, and **Completeness** metrics. 
+with attention mechanisms, trained on **Sparkov's** synthetic dataset. The main contribution lies in the integration and comparative analysis of three Explainable AI methods: **SHAP**, **LIME** and **Anchors**. Research further evaluates the effectiveness of each XAI method based on **Faithfulness**, **Monotonicity**, and **Completeness** metrics.
+
+<p align="center">
+  <a href="https://docs.google.com/viewer?url=github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/poster.pdf?raw=true">
+    <img src="visualisation/poster.jpg" alt="Academic Poster" width="600">
+  </a>
+  <br>
+  <em>Academic Poster</em>
+  <br>
+  <em><small><a href="https://docs.google.com/viewer?url=github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/poster.pdf?raw=true">(Click to view PDF)</a></small></em>
+</p>
 
 **Key Features:**
 - **Multi-Model Comparison:**  
@@ -270,6 +280,7 @@ Project Root/
 ├── README.md .................................... Project brief  
 ├── Report Documentation.pdf ..................... Project Report Documentation
 ├── presentation.pdf ............................. Project Presentation
+├── poster.pdf ................................... Academic Poster
 └── .gitignore ................................... Git configuration
 ```
 
