@@ -15,16 +15,9 @@
 
 ## Description
 
-Credit card fraud represents an important and growing challenge in the financial sector, causing
-significant monetary losses worldwide. According to the data from the UK Finance, fraudsters
-stole over £1.3 billion in 2021 alone through authorised and unauthorised fraud, with card
-fraud accounting for a significant part of these damages [^ukfinance2022]. Detection of
-fraud transactions presents several important challenges that increase the need for advanced
-computational approaches.
+Credit card fraud represents an important and growing challenge in the financial sector, causing significant monetary losses worldwide. According to the data from the UK Finance, fraudsters stole over £1.3 billion in 2021 alone through authorised and unauthorised fraud, with card fraud accounting for a significant part of these damages [^ukfinance2022]. Detection of fraud transactions presents several important challenges that increase the need for advanced computational approaches.
 
-The project utilized and evaluated the **XAI methods** on several **Deep Learning**
-architectures that are widely known to be used in detecting credit card transaction fraud, including **CNN** and **LSTM**
-with attention mechanisms, trained on **Sparkov's** synthetic dataset. The main contribution lies in the integration and comparative analysis of three Explainable AI methods: **SHAP**, **LIME** and **Anchors**. Research further evaluates the effectiveness of each XAI method based on **Faithfulness**, **Monotonicity**, and **Completeness** metrics.
+The project utilized and evaluated the **XAI methods** on **Deep Learning** architectures that are widely known to be used in detecting credit card transaction fraud, including **CNN** and **LSTM** with attention mechanisms, trained on **Sparkov's** synthetic dataset. The main contribution lies in the integration and comparative analysis of three Explainable AI methods: **SHAP**, **LIME** and **Anchors**. Research further evaluates the effectiveness of each XAI method based on **Faithfulness**, **Monotonicity**, and **Completeness** metrics.
 
 <p align="center">
   <a href="https://docs.google.com/viewer?url=github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/poster.pdf?raw=true">
