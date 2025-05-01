@@ -258,15 +258,15 @@ flowchart TD
 ### Confidence-Based Performance Analysis
 | Method  | Very Low | Low   | Borderline | High  | Very High |
 |---------|----------|-------|------------|-------|-----------|
-|         |          |       |  **Faithfulness**  |           |
+|                               **Faithfulness**              |
 | SHAP    | 0.629    | 0.594 | 0.620      | 0.544 | 0.602     |
 | LIME    | 0.312    | 0.304 | 0.317      | 0.326 | 0.378     |
 | Anchors | 0.407    | 0.348 | 0.393      | 0.285 | 0.353     |
-|         |          |       |  **Completeness**  |           |
+|                               **Completeness**              |
 | SHAP    | 0.089    | 0.139 | 0.106      | 0.265 | 0.322     |
 | LIME    | 0.289    | 0.129 | 0.127      | 0.195 | 0.283     |
 | Anchors | 0.012    | 0.029 | 0.000      | 0.048 | 0.059     |
-|         |          |       |  **Monotonicity**  |           |
+|                               **Monotonicity**              |
 | SHAP    | 0.513    | 0.429 | 0.421      | 0.422 | 0.389     |
 | LIME    | 0.536    | 0.471 | 0.464      | 0.419 | 0.386     |
 | Anchors | 0.547    | 0.507 | 0.411      | 0.461 | 0.400     |
