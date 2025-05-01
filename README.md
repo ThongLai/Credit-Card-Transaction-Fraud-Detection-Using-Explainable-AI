@@ -276,4 +276,10 @@ Project Root/
 └── .gitignore ................................... Git configuration
 ```
 
+## Acknowledgments
+
+I would like to express my sincere gratitude to my supervisor [**Dr. Hyunkook Lee**](https://pure.hud.ac.uk/en/persons/hyunkook-lee) at the *University of Huddersfield*, for his invaluable guidance, expertise, and support and particularly grateful for his encouragement to explore and his patient feedback.
+
+
+
 [^ukfinance2022]: UK Finance. (2022). *Annual Fraud Report 2022*. https://www.ukfinance.org.uk/policy-and-guidance/reports-and-publications/annual-fraud-report-2022
