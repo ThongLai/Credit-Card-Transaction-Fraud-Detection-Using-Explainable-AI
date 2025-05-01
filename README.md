@@ -212,7 +212,7 @@ flowchart TD
 
 ## Key Visualizations
 
-### Feature Importance Analysis
+### SHAP Feature Importance Analysis
 <p align="center">
   <img src="https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/visualisation/shap_summary_global_of_CNN.png?raw=true" alt="SHAP Feature Importance" width="500">
   <br>
