@@ -210,15 +210,6 @@ flowchart TD
 - **Synthetic Data Generation**: To generate synthetic credit card transaction data, including fraudulent transactions, refer to the [Sparkov Data Generation repository](https://github.com/namebrandon/Sparkov_Data_Generation).
 - **Combined Dataset**: The combined dataset from Sparkov Data Generation, converted into a standard format, can be accessed [here on Kaggle](https://www.kaggle.com/datasets/kartik2112/fraud-detection).
 
-## XAI Methods Evaluation
-
-### Summary Performance Results
-| Method  | Faithfulness | Monotonicity | Completeness |
-|---------|--------------|--------------|--------------|
-| SHAP    | 0.602        | 0.447        | 0.171        |
-| LIME    | 0.325        | 0.467        | 0.217        |
-| Anchors | 0.364        | 0.478        | 0.028        |
-
 ## Key Visualizations
 
 ### Feature Importance Analysis
@@ -228,19 +219,67 @@ flowchart TD
   <em>SHAP values showing global feature importance across the dataset</em>
 </p>
 
+<p align="center">
+  <img src="https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/visualisation/shap_waterfall_plot_of_CNN_at_1044.png?raw=true" alt="SHAP Waterfall Plot" width="500">
+  <br>
+  <em>SHAP Waterfall Plot showing how each feature contributes to CNN's prediction for transaction #1044</em>
+</p>
+
+<p align="center">
+  <img src="https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/visualisation/shap_force_plot_of_CNN_at_1044.png?raw=true" alt="SHAP Force Plot" width="500">
+  <br>
+  <em>SHAP Force Plot displaying the cumulative effect of all features on CNN's prediction for transaction #1044</em>
+</p>
+
+
 ### Local Explanation Example
 <p align="center">
   <img src="https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/visualisation/lime_explain_plot_of_LSTM_at_1044.png?raw=true" alt="LIME Explanation" width="500">
   <br>
-  <em>LIME explaining an individual fraud prediction</em>
+  <em>LIME explaining an individual of LSTM's fraud prediction for transaction #1044</em>
 </p>
 
 ### Rule-Based Insights
 <p align="center">
-  <img src="https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/visualisation/anchors_notebook_of_LSTM_at_2025.png?raw=true" alt="Anchors Rules" width="1000">
+  <img src="https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/visualisation/anchors_notebook_of_LSTM_at_2025.png?raw=true" alt="Anchors Rules" width="600">
   <br>
-  <em>Anchors generating interpretable rules for fraud detection</em>
+  <em>Anchors generating interpretable rules of LSTM's fraud prediction for transaction #2025</em>
 </p>
+
+## XAI Methods Explainability Evaluation
+
+### Summary Performance Results
+| Method  | Faithfulness | Monotonicity | Completeness |
+|---------|--------------|--------------|--------------|
+| SHAP    | 0.602        | 0.447        | 0.171        |
+| LIME    | 0.325        | 0.467        | 0.217        |
+| Anchors | 0.364        | 0.478        | 0.028        |
+
+### Confidence-Based Performance Analysis
+| Method  | Very Low | Low   | Borderline | High  | Very High |
+|---------|----------|-------|------------|-------|-----------|
+|         |          |       |  **Faithfulness**  |           |
+| SHAP    | 0.629    | 0.594 | 0.620      | 0.544 | 0.602     |
+| LIME    | 0.312    | 0.304 | 0.317      | 0.326 | 0.378     |
+| Anchors | 0.407    | 0.348 | 0.393      | 0.285 | 0.353     |
+|         |          |       |  **Completeness**  |           |
+| SHAP    | 0.089    | 0.139 | 0.106      | 0.265 | 0.322     |
+| LIME    | 0.289    | 0.129 | 0.127      | 0.195 | 0.283     |
+| Anchors | 0.012    | 0.029 | 0.000      | 0.048 | 0.059     |
+|         |          |       |  **Monotonicity**  |           |
+| SHAP    | 0.513    | 0.429 | 0.421      | 0.422 | 0.389     |
+| LIME    | 0.536    | 0.471 | 0.464      | 0.419 | 0.386     |
+| Anchors | 0.547    | 0.507 | 0.411      | 0.461 | 0.400     |
+
+
+### Model-Specific XAI Performance
+| Metric       |       |  CNN  |         |       | LSTM  |         |
+|--------------|-------|-------|---------|-------|-------|---------|
+|              | SHAP  | LIME  | Anchors | SHAP  | LIME  | Anchors |
+| Faithfulness | 0.443 | 0.254 | 0.315   | 0.761 | 0.396 | 0.412   |
+| Monotonicity | 0.464 | 0.488 | 0.486   | 0.429 | 0.445 | 0.469   |
+| Completeness | 0.208 | 0.295 | 0.033   | 0.134 | 0.139 | 0.022   |
+
 
 ## Key Findings
 - **Explainability Analysis**:
