@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 - **Documentation:** [Report Documentation.pdf
-](https://docs.google.com/viewer?url=github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/Report%20Documentation.pdf?raw=true)
+](https://mozilla.github.io/pdf.js/web/viewer.html?file=https://raw.githubusercontent.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/main/Report%20Documentation.pdf)
 
 - **Main analysis notebook:** [XAI_methods.ipynb](https://github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/XAI_methods.ipynb)
 
@@ -20,13 +20,13 @@ Credit card fraud represents an important and growing challenge in the financial
 The project utilized and evaluated the **XAI methods** on **Deep Learning** architectures that are widely known to be used in detecting credit card transaction fraud, including **CNN** and **LSTM** with attention mechanisms, trained on **Sparkov's** synthetic dataset. The main contribution lies in the integration and comparative analysis of three Explainable AI methods: **SHAP**, **LIME** and **Anchors**. Research further evaluates the effectiveness of each XAI method based on **Faithfulness**, **Monotonicity**, and **Completeness** metrics.
 
 <p align="center">
-  <a href="https://docs.google.com/viewer?url=github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/poster.pdf?raw=true">
+  <a href="https://mozilla.github.io/pdf.js/web/viewer.html?file=https://raw.githubusercontent.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/main/poster.pdf">
     <img src="visualisation/poster.jpg" alt="Academic Poster" width="600">
   </a>
   <br>
   <em>Academic Poster</em>
   <br>
-  <em><small><a href="https://docs.google.com/viewer?url=github.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/blob/main/poster.pdf?raw=true">(Click to view PDF)</a></small></em>
+  <em><small><a href="https://mozilla.github.io/pdf.js/web/viewer.html?file=https://raw.githubusercontent.com/ThongLai/Credit-Card-Transaction-Fraud-Detection-Using-Explainable-AI/main/poster.pdf">(Click to view PDF)</a></small></em>
 </p>
 
 **Key Features:**
